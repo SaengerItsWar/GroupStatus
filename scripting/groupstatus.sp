@@ -46,6 +46,7 @@ public void OnPluginStart()
     AutoExecConfig_SetFile("plugin.groupstatus");
     g_cGroupID = AutoExecConfig_CreateConVar("groupstatus_id", "", "ID of the group");
     g_cGroupURL = AutoExecConfig_CreateConVar("groupstatus_url", "", "Custom url name of the group");
+    g_cFlag = AutoExecConfig_CreateConVar("groupstatus_flag","f","Wich CustomFlag should the client have when joined the group.")
     AutoExecConfig_ExecuteFile();
     AutoExecConfig_CleanFile();
 
@@ -130,6 +131,7 @@ public int SteamWorks_OnClientGroupStatus(int authid, int groupid, bool isMember
     {
         g_bStatus[client] = true;
         CPrintToChat(client, "%T", "In Group: Yes", client);
+        AddUserFlags(client, g_cFlag);
     }
     else if (g_bStatus[client] && !isMember && !isOfficer)
     {
